@@ -74,12 +74,12 @@ jobs:
       - restore_cache:
           keys: [frontend-deps]
       - run:
-          name: Front-End Unit Test
+          name: Front-end Unit Test
           command: |
             cd frontend
             npm install
-            npm test
-
+            npm test 
+      
                 
   test-backend:
     docker:
@@ -89,14 +89,15 @@ jobs:
       - restore_cache:
           keys: [backend-deps]
       - run:
-          name: Back-End Unit Test
+          name: Back-end Unit Test
           command: |
             cd backend
             npm install
             npm test
-       - save_cache:
+      - save_cache:
           paths: [backend/node_modules]
           key: backend-deps
+
 #   scan-frontend:
 #     docker:
 #       # Docker image here
