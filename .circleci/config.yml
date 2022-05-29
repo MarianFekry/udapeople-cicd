@@ -230,11 +230,10 @@ jobs:
             pip3 install awscli
       - run:
           name: configure server
-          command: |
-            ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-            cd .circleci/ansible
-            cat inventory.txt
-            ansible-playbook -i inventory.txt configure-server.yml
+          command: |           
+            cat ~/project/.circleci/ansible/inventory.txt
+            export ANSIBLE_HOST_KEY_CHECKING=False
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
       
       - destroy-environment
      
