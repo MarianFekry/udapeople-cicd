@@ -227,15 +227,13 @@ jobs:
             apk add --upgrade bash
             apk add --update ansible
             apk add openssh-client
-            apk add --update tar gzip ansible nodejs npm curl
             pip3 install awscli
       - run:
-          name: configure server
-          command: |           
-            cd .circleci/ansible
-            echo "Inventory content"
-            cat inventory.txt
-            ansible-playbook -i inventory.txt configure-server.yml
+          name: Configure server
+          command: |
+            cat ~/Udapeople-cicd/.circleci/ansible/inventory.txt
+            export ANSIBLE_HOST_KEY_CHECKING=False
+            ansible-playbook -i ~/Udapeople-cicd/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
       
       - destroy-environment
      
