@@ -223,7 +223,7 @@ jobs:
             pip install awscli
       - run:
           name: Check there is .env file at workspace.
-          command: cat backend/.env
+          command: cat backend/Production.env
       - run:
           name: Configure server with ansible
           no_output_timeout: 30m
@@ -233,7 +233,7 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}        
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}       
 
   # configure-infrastructure:
   #   docker:
