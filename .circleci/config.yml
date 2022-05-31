@@ -45,10 +45,8 @@ commands:
         - run:
             name: Revert migrations
             when: on_fail
-            command: |
-              # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-              # SUCCESS = 1
-              SUCCESS=$(curl --insecure https://kvdb.io/2skvzNEQXGuQ3Am4mY7gVq/migration_<< parameters.Workflow_ID >>) 
+            command: |              
+              SUCCESS=$(curl --insecure https://kvdb.io/2skvzNEQXGuQ3Am4mY7gVq/migration_<<parameters.Workflow_ID>>) 
               echo $SUCCESS
               if(( $SUCCESS==1 ));
               then
