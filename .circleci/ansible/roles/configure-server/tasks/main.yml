@@ -32,22 +32,6 @@
   file:
     path: "~/home/ubuntu/backend"
     state: directory
-# - name: "update apt"
-#   become: true
-#   apt:
-#     update_cache: yes
-
-# - name: "upgrade apt packages"
-#   become: true
-#   apt:
-#     upgrade: "yes"
-
-# - name: "install dependencies."
-#   become: true
-#   apt:
-#     name: ["nodejs", "npm"]
-#     state: latest
-#     update_cache: yes
 
 - name: "install n"
   become: true
