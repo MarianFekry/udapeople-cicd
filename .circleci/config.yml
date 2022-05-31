@@ -251,17 +251,18 @@ jobs:
     docker:
       - image: cimg/node:13.8.0
     steps:
+      - checkout
+      - install_awscli
       - attach_workspace:
             at: ~/project
       - restore_cache:
           keys: [backend-build]
-      - checkout
-      - install_awscli
+     
       - run:
           name: Run migrations
           command: |
             cd backend           
-            npm i
+            npm install
             npm run build
             npm run migrations | tee migrations-${CIRCLE_WORKFLOW_ID}.txt
             cat migrations-${CIRCLE_WORKFLOW_ID}.txt
