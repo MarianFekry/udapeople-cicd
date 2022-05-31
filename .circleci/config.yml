@@ -199,48 +199,82 @@ jobs:
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
    
-           
-
   configure-infrastructure:
     docker:
+      # Docker image here that supports Ansible
       - image: python:3.7-alpine3.11
-        environment:
-          NODE_ENV: "local"
-          VERSION: "1"
-          ENVIRONMENT: "production"
-          TYPEORM_CONNECTION: $TYPEORM_CONNECTION
-          TYPEORM_HOST: $TYPEORM_HOST
-          TYPEORM_USERNAME: $TYPEORM_USERNAME
-          TYPEORM_PASSWORD: $TYPEORM_PASSWORD
-          TYPEORM_DATABASE: $TYPEORM_DATABASE
-          TYPEORM_PORT: $TYPEORM_PORT
-          TYPEORM_ENTITIES: $TYPEORM_ENTITIES
-        
     steps:
-      - checkout 
-       
+      
+      - checkout
+      
       - add_ssh_keys:
           fingerprints: ["93:03:ad:42:36:b5:6a:9e:16:38:e4:b6:37:e0:39:c7"]
+     
       - attach_workspace:
-          at: ~/
-      
+          at: ~/project
+      - run:
+          name: Install ansible.
+          command: |
+            apk add --update ansible
       - run:
           name: Install dependencies
           command: |
-            apk add curl
-            apk add --upgrade bash
-            apk add --update ansible
-            apk add openssh-client
-            pip3 install awscli
+            apk add --update tar gzip ansible nodejs npm curl
+            pip install awscli
       - run:
-          name: Configure server
+          name: Check there is .env file at workspace.
+          command: cat backend/.env
+      - run:
+          name: Configure server with ansible
+          no_output_timeout: 30m
           command: |
-            cat ~/project/.circleci/ansible/inventory.txt
-            export ANSIBLE_HOST_KEY_CHECKING=False
-            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
-      
+            cd .circleci/ansible
+            echo "Inventory content"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
-           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}        
+
+  # configure-infrastructure:
+  #   docker:
+  #     - image: python:3.7-alpine3.11
+  #       environment:
+  #         NODE_ENV: "local"
+  #         VERSION: "1"
+  #         ENVIRONMENT: "production"
+  #         TYPEORM_CONNECTION: $TYPEORM_CONNECTION
+  #         TYPEORM_HOST: $TYPEORM_HOST
+  #         TYPEORM_USERNAME: $TYPEORM_USERNAME
+  #         TYPEORM_PASSWORD: $TYPEORM_PASSWORD
+  #         TYPEORM_DATABASE: $TYPEORM_DATABASE
+  #         TYPEORM_PORT: $TYPEORM_PORT
+  #         TYPEORM_ENTITIES: $TYPEORM_ENTITIES
+        
+  #   steps:
+  #     - checkout 
+       
+  #     - add_ssh_keys:
+  #         fingerprints: ["93:03:ad:42:36:b5:6a:9e:16:38:e4:b6:37:e0:39:c7"]
+  #     - attach_workspace:
+  #         at: ~/
+      
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           apk add curl
+  #           apk add --upgrade bash
+  #           apk add --update ansible
+  #           apk add openssh-client
+  #           pip3 install awscli
+  #     - run:
+  #         name: Configure server
+  #         command: |
+  #           cat ~/project/.circleci/ansible/inventory.txt
+  #           export ANSIBLE_HOST_KEY_CHECKING=False
+  #           ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
+      
+  #     - destroy-environment:
+  #          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
      
 #   run-migrations:
 #     docker:
