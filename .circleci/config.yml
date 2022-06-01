@@ -261,10 +261,9 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cd backend           
-            npm install
-            npm run migrations 
-            
+            cd ~/project/backend
+            npm intall
+                    
             
       - run:
           name: Send migration results to kvdb.io
