@@ -250,24 +250,15 @@ jobs:
   run-migrations:
     run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/project
-      - restore_cache:
-          keys: [backend-build]
       - run:
           name: Run migrations
-          no_output_timeout: 7m
           command: |
-            pwd
-            ls
-            
             cd backend
-            cat .env
-            npm run migrations | tee migrations-${CIRCLE_WORKFLOW_ID}.txt
-            cat migrations-${CIRCLE_WORKFLOW_ID}.txt    
+            npm intall
+            
             
       - run:
           name: Send migration results to kvdb.io
