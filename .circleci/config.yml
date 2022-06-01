@@ -262,7 +262,8 @@ jobs:
           no_output_timeout: 7m
           command: |
             pwd
-            ls            
+            ls
+            
             cd backend
             cat .env
             npm run migrations | tee migrations-${CIRCLE_WORKFLOW_ID}.txt
