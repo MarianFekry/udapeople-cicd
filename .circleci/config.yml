@@ -261,8 +261,7 @@ jobs:
             npm i 
             npm run migrations 
 
-            
-# test             
+             
       - run:
           name: Send migration results to kvdb.io
           command: |
