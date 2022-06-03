@@ -285,7 +285,9 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:13.8.0
+    # docker:
+    #   - image: cimg/base:stable
     steps:
       - checkout
       - install_awscli
@@ -316,40 +318,7 @@ jobs:
             cd frontend
             npm run build
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-  # deploy-backend:
-  #     docker:
-  #       - image: python:3.7-alpine3.11
-          
-  #     steps:
-  #       - checkout
-  #       - add_ssh_keys:
-  #           fingerprints: ["93:03:ad:42:36:b5:6a:9e:16:38:e4:b6:37:e0:39:c7"]
-  #       - attach_workspace:
-  #           at: ~/project
-  #       - restore_cache:
-  #           keys: [backend-build]
-  #       - run:
-  #           name: Install dependencies
-  #           command: |
-  #             apk add --update tar gzip ansible nodejs npm curl openssh-client
-  #             pip install awscli
-  #       - run:
-  #           name: Deploy backend
-  #           no_output_timeout: 30m
-  #           command: |
-  #             pwd            
-  #             tar -C backend -czvf backend_artifact.tar.gz .
-  #             cd .circleci/ansible
-  #             ansible-playbook -i inventory.txt deploy-backend.yml
-        
-  #       - destroy-environment:
-  #           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-  #       - revert-migrations:
-  #           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-
-
-
-
+ 
                     
   deploy-backend:
     docker:

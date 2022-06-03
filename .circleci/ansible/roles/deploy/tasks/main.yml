@@ -15,7 +15,7 @@
     update_cache: yes
 
 - name: Ansible shell module multiple commands
-  shell: 'curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
+  shell: 'curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -'
 
 - name: Install reqired packages
   apt: name={{ item }} state=present
@@ -33,9 +33,9 @@
 - name: "Executing Node app with PM2"
   shell: |
     cd ~/backend-app/dist
-    node ./main.js
-    # pm2 stop default
-    # pm2 start main.js
+    # node ./main.js
+    pm2 stop default
+    pm2 start main.js
 
   register: execute_node
 
@@ -49,27 +49,3 @@
     env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
 
 
-
-# - name: "Move backend files to server."
-#   copy:
-#     src: /root/project/backend_artifact.tar.gz
-#     dest: ~/home/ubuntu
-
-# - name: "install package dependencies"
-#   shell: |
-#     cd ~/home/ubuntu
-#     tar -xzvf backend_artifact.tar.gz -C backend
-#     rm backend_artifact.tar.gz
-#     cd backend/
-#     # npm install && npm run build
-#     npm audit fix && npm run build
-#     cd dist
-#     echo `pwd` >> ansible-test.txt
-#     pm2 start npm --name backend -- start
-
-# - name: Executing node
-#   become: true
-#   shell: |
-#     cd ~/home/ubuntu/home/ubuntu/backend/dist
-#     echo "EXECUTED PM2" >> ansible-test.txt
-#     pm2 start npm --name backend -- start
