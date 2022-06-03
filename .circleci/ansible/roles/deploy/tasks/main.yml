@@ -12,9 +12,10 @@
 
 - name: "Installing Node Dependencies"
   shell: |
+    curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+    sudo apt-get install -y nodejs
     cd ~/backend-app
-    node -version
-    # npm install
+    npm install
 
 - name: "Executing Node app with PM2"
   shell: |
