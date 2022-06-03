@@ -52,7 +52,7 @@ commands:
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
-              npm intall
+              npm install
               npm run migration:revert       
             
             fi
@@ -249,7 +249,7 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - attach_workspace:
@@ -257,9 +257,13 @@ jobs:
       - run:
           name: Run migrations
           command: |            
+            echo "0"
             cd backend
-            npm i 
+            echo "1"
+            npm install 
+            echo "2"
             npm run migrations 
+            echo "3"
 
              
       - run:
