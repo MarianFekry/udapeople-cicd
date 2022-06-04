@@ -19,7 +19,7 @@
   apt_key:
     url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
     state: present
-
+# test
 # - name: Ansible shell module multiple commands
 #   shell: |
 #     curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash - && sudo apt-get install -y nodejs
