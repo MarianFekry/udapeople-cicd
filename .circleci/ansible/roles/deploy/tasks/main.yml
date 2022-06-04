@@ -23,7 +23,7 @@
   with_items:
       - curl
       - wget
-      - nginx
+      # - nginx
       - nodejs
 
 - name: "Installing Node Dependencies"
