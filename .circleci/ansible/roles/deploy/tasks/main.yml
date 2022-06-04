@@ -25,7 +25,7 @@
       - wget
       # - nginx
       - nodejs
-
+# test
 - name: "Installing Node Dependencies"
   shell: |
     npm install pm2@latest -g
