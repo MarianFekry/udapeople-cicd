@@ -386,15 +386,15 @@ jobs:
             pip install awscli
             # cd backend
             # npm install
-      - run:
-          name: Package Backend
-          command: |
-            cd backend
-            npm run build
-            tar -czvf artifact.tar.gz dist/* package*
+      # - run:
+      #     name: Package Backend
+      #     command: |
+      #       cd backend
+      #       npm run build
+      #       tar -czvf artifact.tar.gz dist/* package*
              
-            cd ..
-            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files 
+      #       cd ..
+      #       cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files 
       - run:
           name: Deploy backend
           command: |
