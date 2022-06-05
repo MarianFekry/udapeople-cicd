@@ -29,7 +29,7 @@ commands:
             sudo apt update
             sudo apt install software-properties-common
             sudo add-apt-repository --yes
-            sudo apt install ansible -y
+            sudo apt install ansible y
             
   destroy-environment:
     description: Destroy backend and frontend cloudformation stacks given a workflow ID.
