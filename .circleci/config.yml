@@ -386,8 +386,8 @@ jobs:
             apk add curl
             pip3 install awscli
 
-            # cd backend
-            # npm install
+            cd backend
+            npm install
       - run:
           name: Package Backend
           command: |
