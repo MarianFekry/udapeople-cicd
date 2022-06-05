@@ -173,15 +173,11 @@ jobs:
 
   deploy-infrastructure:
     docker:
-        # - image: amazon/aws-cli
-      - image: cimg/base:stable
+        - image: amazon/aws-cli
+      # - image: cimg/base:stable
     steps:
       - checkout
-      - run:
-        name: Install tar utility
-        command: |
-          yum install -y tar gzip
-      # - install_awscli
+      - install_awscli
       - run:
           name: Ensure back-end infrastructure exists
           command: |
