@@ -173,10 +173,15 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: cimg/base:stable
+        - image: amazon/aws-cli
+      # - image: cimg/base:stable
     steps:
       - checkout
-      - install_awscli
+       - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
+      # - install_awscli
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -361,12 +366,13 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: cimg/base:stable
+        - image: python:3.7-alpine3.11
+      # - image: cimg/base:stable
     steps:
       - checkout
-      - install_awscli
-      - install_ansible
-      - install_nodejs
+      # - install_awscli
+      # - install_ansible
+      # - install_nodejs
       - add_ssh_keys:
           fingerprints: ["93:03:ad:42:36:b5:6a:9e:16:38:e4:b6:37:e0:39:c7"]
       - attach_workspace:
@@ -376,8 +382,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            cd backend
-            npm install
+            apk add --update ansible rsync 
+            apk add curl
+            pip3 install awscli
+
+            # cd backend
+            # npm install
       - run:
           name: Package Backend
           command: |
