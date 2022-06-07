@@ -28,19 +28,17 @@
   shell: n 13.8.0
 
 
-
-# - name: "Installing Node Dependencies"
-#   shell: |
-#     npm install pm2@latest -g
-#     cd ~/backend-app
-#     npm install
+- name: "Installing Node Dependencies"
+  shell: |
+    npm install pm2@latest -g
+    cd ~/backend-app
+    npm install
 
 - name: "Executing Node app with PM2"
   shell: |
-    npm install pm2@latest -g
     cd ~/backend-app/dist    
     pm2 stop default
-    pm2 start main.js
+    pm2 start main.js -- --port 3030
 
   register: execute_node
 
