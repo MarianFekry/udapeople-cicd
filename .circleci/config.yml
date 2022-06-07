@@ -218,24 +218,24 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
    
   configure-infrastructure:
-  docker:      
-      - image: cimg/base:stable
-  steps:      
-      - checkout
-      - install_ansible      
-      - add_ssh_keys:
-          fingerprints: ["93:03:ad:42:36:b5:6a:9e:16:38:e4:b6:37:e0:39:c7"]
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: configure server
-          command: |
-            cd .circleci/ansible
-            cat inventory.txt
-            ansible-playbook -i inventory.txt configure-server.yml
+    docker:      
+        - image: cimg/base:stable
+    steps:      
+        - checkout
+        - install_ansible      
+        - add_ssh_keys:
+            fingerprints: ["93:03:ad:42:36:b5:6a:9e:16:38:e4:b6:37:e0:39:c7"]
+        - attach_workspace:
+            at: ~/
+        - run:
+            name: configure server
+            command: |
+              cd .circleci/ansible
+              cat inventory.txt
+              ansible-playbook -i inventory.txt configure-server.yml
 
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+        - destroy-environment:
+            workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
     # docker:      
     #   - image: python:3.7-alpine3.11
     # steps:
