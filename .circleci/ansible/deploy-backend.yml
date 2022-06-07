@@ -33,10 +33,8 @@
     #   raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
     #   changed_when: false
     
-    - name: Install Python
-      raw: apt -y update && apt install -y python-minimal
-      when: check_python.rc != 0
-      
+   
+
     - setup:
 
   roles:
