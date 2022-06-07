@@ -3,42 +3,42 @@
   file:
     path: ~/backend-app
     state: directory
-# - name: "Copy compiled backend app"
-#   copy:
-#     src: dist.zip
-#     dest: "~/backend-app/dist.zip"
+- name: "Copy compiled backend app"
+  copy:
+    src: dist.zip
+    dest: "~/backend-app/dist.zip"
 
-# - name: "Unzip backend files to correct directory"
-#   shell: |
-#     cd ~/backend_app
-#     unzip dist.zip
-#     rm -rf dist.zip
-# - name: "Install dependencies for project"
-#   shell: |
-#     cd ~/backend-app
-#     npm install
-# - name: "Executing node"
-#   shell: |
-#     export
-#     cd ~/backend-app
-#     pm2 start main.js
-#   register: execute_node
+- name: "Unzip backend files to correct directory"
+  shell: |
+    cd ~/backend-app
+    unzip dist.zip
+    rm -rf dist.zip
+- name: "Install dependencies for project"
+  shell: |
+    cd ~/backend-app
+    npm install
+- name: "Executing node"
+  shell: |
+    export
+    cd ~/backend-app
+    pm2 start main.js
+  register: execute_node
 
-# - name: print message
-#   debug:
-#     msg: "{{ execute_node.stdout_lines }}"
+- name: print message
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
 
-# - name: "Configure pm2 to start as service"
-#   shell: |
-#     env PATH=$PATH:/usr/local/bin pm2 startup -u ubuntu
+- name: "Configure pm2 to start as service"
+  shell: |
+    env PATH=$PATH:/usr/local/bin pm2 startup -u ubuntu
 
-- name: "Unarchive backend files"
-  unarchive:
-    src: artifact.tar.gz
-    dest: ~/backend-app
-- name: "Run the equivalent of 'apt-get update' as a separate step"
-  apt:
-    update_cache: yes
+# - name: "Unarchive backend files"
+#   unarchive:
+#     src: artifact.tar.gz
+#     dest: ~/backend-app
+# - name: "Run the equivalent of 'apt-get update' as a separate step"
+#   apt:
+#     update_cache: yes
 
 # - name: Ansible shell module multiple commands
 #   shell: 'curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
@@ -51,50 +51,19 @@
 #       - nginx
 #       - nodejs
 
-- name: "Installing Node Dependencies"
-  shell: |
-    npm install pm2@latest -g
-    cd ~/backend-app
-    npm install
-
-- name: "Executing Node app with PM2"
-  shell: |
-    cd ~/backend-app/dist
-    # node ./main.js
-    pm2 stop default
-    pm2 start main.js
-
-  register: execute_node
-
-- name: print message
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
-
-- name: "Configure pm2 to start as service"
-  become: true
-  shell: |
-    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
-
-
-# - name: "Copy compiled backend app"
-#   copy:
-#     src: dist.zip
-#     dest: "~/backend-app/dist.zip"
-
-# - name: "Unzip backend files to correct directory"
+# - name: "Installing Node Dependencies"
 #   shell: |
-#     cd ~/backend_app
-#     unzip dist.zip
-#     rm -rf dist.zip
-# - name: "Install dependencies for project"
-#   shell: |
+#     npm install pm2@latest -g
 #     cd ~/backend-app
 #     npm install
-# - name: "Executing node"
+
+# - name: "Executing Node app with PM2"
 #   shell: |
-#     export
-#     cd ~/backend-app
+#     cd ~/backend-app/dist
+#     # node ./main.js
+#     pm2 stop default
 #     pm2 start main.js
+
 #   register: execute_node
 
 # - name: print message
@@ -102,10 +71,15 @@
 #     msg: "{{ execute_node.stdout_lines }}"
 
 # - name: "Configure pm2 to start as service"
+#   become: true
 #   shell: |
-#     env PATH=$PATH:/usr/local/bin pm2 startup -u ubuntu
+#     env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
 
-#
+
+
+
+
+
 
 
 
